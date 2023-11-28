@@ -8,7 +8,7 @@ const Menu = () => {
     return (
         <div>
             <Link style={padding} to="/">Anecdotes</Link>
-            <Link style={padding} to="/createnew">Create New</Link>
+            <Link style={padding} to="/create">Create New</Link>
             <Link style={padding} to="/about">About</Link>
         </div>
     )
