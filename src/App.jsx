@@ -1,9 +1,10 @@
 import { useState } from "react"
-import Menu from './pages/Menu'
-import AnecdoteList from './pages/AnecdoteList'
+import Menu from './components/Menu'
 import About from './pages/About'
 import CreateNew from './pages/CreateNew'
-import Footer from './pages/Footer'
+import Footer from './components/Footer'
+import { Route, Routes } from "react-router-dom"
+import Home from "./pages/Home"
 
 function App() {
 
@@ -48,9 +49,12 @@ function App() {
     <div>
       <h1>Software Anecdotes</h1>
       <Menu />
-      <AnecdoteList anecdotes={anecdotes} />
-      <About />
-      <CreateNew addNew={addNew} />
+
+      <Routes>
+        <Route path="/" element={<Home anecdotes={anecdotes}/>} />
+        <Route path="/createnew" element={<CreateNew addNew={addNew} />}/>
+        <Route path="/about" element={<About />}/>
+      </Routes>
       <Footer />
     </div>
   )
