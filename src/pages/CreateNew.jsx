@@ -1,10 +1,13 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useNotificationDispatch } from "../NotificationContext"
 
 const CreateNew = (props) => {
     const [content, setContent] = useState('')
     const [author, setAuthor] = useState('')
     const [info, setInfo] = useState('')
     const navigate = useNavigate()
+    const dispatch = useNotificationDispatch()
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -14,6 +17,16 @@ const CreateNew = (props) => {
             info,
             votes: 0
         })
+        dispatch({
+            type: 'set',
+            payload: `a new anecdote ${content} is created!`
+        })
+        setTimeout(() => {
+            dispatch({
+                type: 'set',
+                payload: ''
+            })
+        }, 5000);
         navigate('/')
     }
 
