@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import { Route, Routes, useMatch } from "react-router-dom"
 import Home from "./pages/Home"
 import Anecdote from "./pages/Anecdote"
+import { useNotification } from "./NotificationContext"
 
 function App() {
 
@@ -27,7 +28,8 @@ function App() {
   ]
 
   const [anecdotes, setAnecdotes] = useState(initialAnecdotes)
-  const [notification, setNotification] = useState('')
+  // const [notification, setNotification] = useState('')
+  const notification = useNotification()
 
   const addNew = anecdote => {
     anecdote.id = Math.round(Math.random() * 10000)
@@ -62,6 +64,7 @@ function App() {
         <Route path="/about" element={<About />}/>
         <Route path="/anecdotes/:id" element={<Anecdote anecdote={anecdote} />} />
       </Routes>
+      {notification ? <p>{notification}</p> : ''}
       <Footer />
     </div>
   )
