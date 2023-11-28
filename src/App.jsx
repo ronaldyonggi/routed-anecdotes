@@ -1,34 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react"
+import Menu from './pages/Menu'
+import AnecdoteList from './pages/AnecdoteList'
+import About from './pages/About'
+import CreateNew from './pages/CreateNew'
+import Footer from './pages/Footer'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const initialAnecdotes = [
+    {
+      content: 'If it hurts, do it more often',
+      author: 'Jez Humble',
+      info: 'https://martinfowler.com/bliki/FrequencyReducesDifficulty.html',
+      votes: 0,
+      id: 1
+    },
+    {
+      content: 'Premature optimization is the root of all evil',
+      author: 'Donald Knuth',
+      info: 'http://wiki.c2.com/?PrematureOptimization',
+      votes: 0,
+      id: 2
+    }
+  ]
+
+  const [anecdotes, setAnecdotes] = useState(initialAnecdotes)
+  const [notification, setNotification] = useState('')
+
+  const addNew = anecdote => {
+    anecdote.id = Math.round(Math.random() * 10000)
+    setAnecdotes(anecdotes.concat(anecdote))
+  }
+
+
+  const vote = id => {
+    const anecdoteToVote = anecdotes.find(a => a.id === id)
+
+    const votedAnecdote = {
+      ...anecdoteToVote,
+      votes: anecdoteToVote.votes + 1
+    }
+
+    setAnecdotes(anecdotes.map(a => a.id === id? votedAnecdote : a))
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <h1>Software Anecdotes</h1>
+      <Menu />
+      <AnecdoteList anecdotes={anecdotes} />
+      <About />
+      <CreateNew addNew={addNew} />
+      <Footer />
+    </div>
   )
 }
 
