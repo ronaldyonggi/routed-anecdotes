@@ -3,8 +3,9 @@ import Menu from './components/Menu'
 import About from './pages/About'
 import CreateNew from './pages/CreateNew'
 import Footer from './components/Footer'
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useMatch } from "react-router-dom"
 import Home from "./pages/Home"
+import Anecdote from "./pages/Anecdote"
 
 function App() {
 
@@ -45,6 +46,11 @@ function App() {
     setAnecdotes(anecdotes.map(a => a.id === id? votedAnecdote : a))
   }
 
+  const idMatch = useMatch('/anecdotes/:id')
+  const anecdote = idMatch 
+    ? anecdotes.find(a => a.id === Number(idMatch.params.id))
+    : null
+
   return (
     <div>
       <h1>Software Anecdotes</h1>
@@ -54,6 +60,7 @@ function App() {
         <Route path="/" element={<Home anecdotes={anecdotes}/>} />
         <Route path="/create" element={<CreateNew addNew={addNew} />}/>
         <Route path="/about" element={<About />}/>
+        <Route path="/anecdotes/:id" element={<Anecdote anecdote={anecdote} />} />
       </Routes>
       <Footer />
     </div>
