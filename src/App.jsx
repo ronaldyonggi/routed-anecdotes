@@ -52,7 +52,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home anecdotes={anecdotes}/>} />
-        <Route path="/createnew" element={<CreateNew addNew={addNew} />}/>
+        <Route path="/create" element={<CreateNew addNew={addNew} />}/>
         <Route path="/about" element={<About />}/>
       </Routes>
       <Footer />
